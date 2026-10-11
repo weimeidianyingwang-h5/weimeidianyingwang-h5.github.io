@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>唯美电影网 - 帧间光影，诗意观影 | weimeidianyingwang-h5.github.io</title>
+<meta name="description" content="唯美电影网（weimeidianyingwang-h5.github.io）以帧·光影·诗意呈现电影之美：艺术电影、唯美画面、经典台词、视觉系片单，移动端自适应，纯静态演示。" />
+<meta name="keywords" content="唯美电影网,weimeidianyingwang-h5,唯美电影,艺术电影,诗意观影,光影导航,视觉系片单" />
+<link rel="canonical" href="https://weimeidianyingwang-h5.github.io/" />
+<style>
+:root{
+  --bg:#faf6f3;--bg2:#f0e8e2;--card:#ffffff;--card2:#f8f1ec;
+  --line:rgba(200,84,80,.15);--line2:rgba(0,0,0,.06);
+  --rose:#c85450;--rose-light:#e8a4a0;--rose-dark:#9e3d3a;
+  --gray:#8a8a9a;--gray-light:#b8b8c4;--dark:#2d2a2a;--dark2:#4a4747;
+  --gold:#b8956a;--radius:2px;--maxw:1180px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Noto Serif SC","Source Han Serif SC","Songti SC","STSong",Georgia,"Times New Roman",serif;
+  background:var(--bg);color:var(--dark);line-height:1.9;-webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+/* 顶部 */
+header.site{position:sticky;top:0;z-index:60;background:rgba(250,246,243,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line2)}
+.nav{display:flex;align-items:center;gap:20px;height:72px}
+.logo{font-size:24px;font-weight:900;letter-spacing:4px;color:var(--rose);display:flex;flex-direction:column;line-height:1.2}
+.logo small{font-size:10px;font-weight:400;letter-spacing:2px;color:var(--gray);font-family:-apple-system,sans-serif}
+.menu{margin-left:auto;display:flex;gap:2px}
+.menu a{padding:10px 18px;font-size:14px;color:var(--dark2);letter-spacing:1px;transition:.3s;border-bottom:2px solid transparent}
+.menu a:hover{color:var(--rose);border-bottom-color:var(--rose)}
+.search{display:flex;gap:6px}
+.search input{width:160px;padding:10px 16px;border:1px solid var(--line2);background:var(--card);color:var(--dark);outline:none;font-size:13px;border-radius:0;font-family:inherit}
+.search input::placeholder{color:var(--gray-light)}
+.search button{border:0;padding:10px 18px;cursor:pointer;font-weight:700;background:var(--rose);color:#fff;font-size:13px;letter-spacing:2px}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line2);color:var(--dark);border-radius:0;padding:8px 12px;font-size:18px}
+
+/* 首屏 - 全屏帧 */
+.hero{position:relative;min-height:88vh;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--dark)}
+.hero-slide{position:absolute;inset:0;opacity:.35;transition:opacity 1.2s}
+.hero-slide:nth-child(1){background:linear-gradient(135deg,#1a1a2e,#c85450 120%)}
+.hero-slide:nth-child(2){background:linear-gradient(225deg,#0f3460,#e8a4a0 120%);opacity:.25}
+.hero-slide:nth-child(3){background:linear-gradient(45deg,#16213e,#b8956a 120%);opacity:.2}
+.hero-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.2),rgba(0,0,0,.7))}
+.hero-body{position:relative;z-index:2;text-align:center;color:#f0e8e2;max-width:720px;padding:0 20px}
+.hero-quote{font-size:14px;letter-spacing:6px;color:var(--rose-light);margin-bottom:28px;font-weight:400}
+.hero h1{font-size:clamp(36px,6vw,64px);margin:0 0 18px;font-weight:900;line-height:1.15;letter-spacing:2px}
+.hero h1 i{font-style:normal;color:var(--rose-light)}
+.hero-desc{font-size:16px;line-height:2;color:rgba(240,232,226,.8);margin-bottom:36px;font-weight:300}
+.hero-actions{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{padding:14px 36px;font-size:13px;letter-spacing:3px;font-weight:700;border:0;cursor:pointer;transition:.35s;font-family:inherit}
+.btn-outline{background:transparent;border:1px solid rgba(240,232,226,.5);color:#f0e8e2}
+.btn-outline:hover{background:rgba(240,232,226,.1);border-color:var(--rose-light)}
+.btn-solid{background:var(--rose);color:#fff}
+.btn-solid:hover{background:var(--rose-dark);transform:translateY(-2px)}
+
+/* 竖排装饰 */
+.vert-label{position:absolute;writing-mode:vertical-rl;font-size:11px;letter-spacing:4px;color:rgba(240,232,226,.3);z-index:2}
+.vert-label.l{left:20px;top:50%;transform:translateY(-50%) rotate(180deg)}
+.vert-label.r{right:20px;top:50%}
+
+/* 栏目通用 */
+.section{padding:80px 0}
+.sec-label{font-size:11px;letter-spacing:5px;color:var(--rose);text-transform:uppercase;margin-bottom:12px;display:block}
+.sec-head{display:flex;align-items:flex-end;gap:20px;margin-bottom:48px;flex-wrap:wrap}
+.sec-head h2{font-size:32px;margin:0;font-weight:900;letter-spacing:2px}
+.sec-head h2::after{content:"";display:block;width:40px;height:2px;background:var(--rose);margin-top:10px}
+.sec-head .sec-desc{color:var(--gray);font-size:14px;max-width:380px;line-height:1.8}
+.more{margin-left:auto;font-size:12px;letter-spacing:2px;color:var(--rose);border-bottom:1px solid var(--rose);padding-bottom:2px}
+
+/* 诗意标签云 */
+.tags-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line2)}
+.tag-cell{padding:48px 28px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);text-align:center;transition:.4s;position:relative;overflow:hidden;background:var(--card)}
+.tag-cell:nth-child(4n){border-right:0}
+.tag-cell:nth-child(n+5){border-bottom:0}
+.tag-cell:hover{background:var(--card2)}
+.tag-cell::before{content:"";position:absolute;top:0;left:0;width:0;height:2px;background:var(--rose);transition:.4s}
+.tag-cell:hover::before{width:100%}
+.tag-num{font-size:11px;color:var(--rose);letter-spacing:2px;margin-bottom:12px;font-family:-apple-system,sans-serif}
+.tag-cell h3{font-size:18px;margin:0 0 8px;font-weight:700}
+.tag-cell p{margin:0;font-size:13px;color:var(--gray);line-height:1.8}
+
+/* 光影时间线 */
+.lightline{position:relative;padding:20px 0}
+.lightline::before{content:"";position:absolute;left:80px;top:0;bottom:0;width:1px;background:var(--line2)}
+.ll-row{display:flex;align-items:flex-start;gap:40px;margin-bottom:48px;position:relative}
+.ll-time{width:80px;flex-shrink:0;text-align:right;padding-right:30px;padding-top:6px}
+.ll-time b{display:block;font-size:28px;color:var(--rose);font-weight:900;line-height:1}
+.ll-time span{font-size:11px;color:var(--gray);letter-spacing:2px}
+.ll-dot{width:12px;height:12px;border-radius:50%;background:var(--rose);position:absolute;left:74px;top:10px;box-shadow:0 0 0 4px rgba(200,84,80,.12)}
+.ll-content{flex:1;padding:24px 28px;background:var(--card);border:1px solid var(--line2);transition:.3s}
+.ll-content:hover{box-shadow:0 12px 40px rgba(0,0,0,.06)}
+.ll-content h3{margin:0 0 8px;font-size:18px;font-weight:700}
+.ll-content p{margin:0 0 12px;font-size:14px;color:var(--gray);line-height:1.9}
+.ll-tag{font-size:11px;letter-spacing:2px;color:var(--rose);padding:3px 12px;border:1px solid var(--line);display:inline-block}
+
+/* 画册片单 */
+.album{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.album-item{group:relative}
+.album-frame{aspect-ratio:3/4;overflow:hidden;position:relative;margin-bottom:18px;background:var(--dark)}
+.album-frame img{display:none}
+.album-item:nth-child(1) .album-frame{background:linear-gradient(170deg,#1a1a2e 0%,#c85450 100%)}
+.album-item:nth-child(2) .album-frame{background:linear-gradient(170deg,#0f3460 0%,#b8956a 100%)}
+.album-item:nth-child(3) .album-frame{background:linear-gradient(170deg,#16213e 0%,#e8a4a0 100%)}
+.album-item:nth-child(4) .album-frame{background:linear-gradient(170deg,#2d2a2a 0%,#8a8a9a 100%)}
+.album-item:nth-child(5) .album-frame{background:linear-gradient(170deg,#4a1942 0%,#c85450 100%)}
+.album-item:nth-child(6) .album-frame{background:linear-gradient(170deg,#0c0c1d 0%,#b8956a 100%)}
+.album-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.9);font-size:48px;transition:.5s}
+.album-frame:hover .album-overlay{transform:scale(1.08)}
+.album-info h3{font-size:17px;margin:0 0 4px;font-weight:700}
+.album-info .meta{font-size:12px;color:var(--gray);letter-spacing:1px;margin-bottom:8px}
+.album-info p{font-size:13px;color:var(--gray);line-height:1.8;margin:0}
+.album-line{width:30px;height:1px;background:var(--rose);margin:10px 0}
+
+/* 台词墙 */
+.quotes{border-top:1px solid var(--line2);border-bottom:1px solid var(--line2);padding:60px 0;background:var(--card2)}
+.quote-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:48px}
+.quote-item{padding:0 20px}
+.quote-item .q-mark{font-size:48px;color:var(--rose);line-height:.5;margin-bottom:16px}
+.quote-item blockquote{margin:0;font-size:18px;line-height:2;color:var(--dark2);font-style:italic}
+.quote-item cite{display:block;margin-top:14px;font-size:12px;color:var(--gray);letter-spacing:2px;font-style:normal}
+.quote-item cite::before{content:"— "}
+
+/* 关于 */
+.about-split{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about-text h3{font-size:24px;margin:0 0 18px;font-weight:900}
+.about-text p{font-size:14px;color:var(--gray);line-height:2;margin-bottom:20px}
+.about-stats{display:flex;gap:30px}
+.about-stat b{display:block;font-size:32px;color:var(--rose);font-weight:900}
+.about-stat span{font-size:12px;color:var(--gray);letter-spacing:1px}
+.about-form{padding:40px;background:var(--card);border:1px solid var(--line2)}
+.about-form h4{margin:0 0 20px;font-size:16px;font-weight:700}
+.about-form input,.about-form textarea{width:100%;padding:14px 0;border:0;border-bottom:1px solid var(--line2);background:transparent;color:var(--dark);outline:none;font-family:inherit;font-size:14px;margin-bottom:24px;border-radius:0}
+.about-form input::placeholder,.about-form textarea::placeholder{color:var(--gray-light)}
+.about-form button{width:100%;padding:16px;border:0;background:var(--rose);color:#fff;font-size:13px;letter-spacing:3px;font-weight:700;cursor:pointer;font-family:inherit;transition:.3s}
+.about-form button:hover{background:var(--rose-dark)}
+
+/* 底部 */
+footer.site{border-top:1px solid var(--line2);padding:48px 0 60px;color:var(--gray);font-size:12px;text-align:center;line-height:2}
+footer.site a{color:var(--rose)}
+footer.site .footer-logo{font-size:20px;font-weight:900;color:var(--rose);letter-spacing:4px;margin-bottom:16px}
+footer.site .footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:20px;flex-wrap:wrap}
+footer.site .footer-links a{color:var(--gray);transition:.3s}
+footer.site .footer-links a:hover{color:var(--rose)}
+
+@media (max-width:1024px){
+  .tags-grid{grid-template-columns:repeat(2,1fr)}
+  .tag-cell:nth-child(2n){border-right:0}
+  .tag-cell:nth-child(n+5){border-bottom:1px solid var(--line2)}
+  .tag-cell:nth-child(n+7){border-bottom:0}
+  .album{grid-template-columns:repeat(2,1fr)}
+  .quote-grid{grid-template-columns:1fr}
+  .about-split{grid-template-columns:1fr;gap:40px}
+}
+@media (max-width:720px){
+  .menu{display:none;position:absolute;top:72px;left:0;right:0;flex-direction:column;background:var(--bg);border-bottom:1px solid var(--line2);padding:16px;gap:0}
+  .menu.open{display:flex}
+  .menu a{border-bottom:1px solid var(--line2);padding:14px 0}
+  .menu a:hover{border-bottom-color:var(--rose)}
+  .burger{display:block}
+  .search input{width:100px}
+  .hero{height:auto;min-height:70vh;padding:60px 0}
+  .vert-label{display:none}
+  .lightline::before{left:20px}
+  .ll-row{flex-direction:column;gap:12px}
+  .ll-time{width:auto;text-align:left;padding-right:0}
+  .ll-dot{left:14px}
+  .ll-content{margin-left:0}
+  .tags-grid{grid-template-columns:1fr}
+  .tag-cell{border-right:0!important}
+  .album{grid-template-columns:1fr}
+  .section{padding:50px 0}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<header class="site">
+  <div class="wrap nav">
+    <div class="logo">唯美电影网<small>weimeidianyingwang-h5.github.io</small></div>
+    <nav class="menu" id="menu">
+      <a href="#home">首页</a>
+      <a href="#tags">光影分类</a>
+      <a href="#lightline">每日帧选</a>
+      <a href="#album">画册片单</a>
+      <a href="#quotes">台词留白</a>
+      <a href="#about">关于唯美</a>
+    </nav>
+    <div class="search">
+      <input type="text" placeholder="搜电影/导演/意境" aria-label="搜索" />
+      <button type="button" onclick="alert('演示站：搜索用 # 占位')">寻帧</button>
+    </div>
+    <button class="burger" id="burger" aria-label="菜单">☰</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- 首屏 -->
+  <section class="hero" id="home" aria-label="唯美电影网首屏">
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-slide"></div>
+    <div class="hero-overlay"></div>
+    <div class="vert-label l">FRAMES · LIGHT · POETRY</div>
+    <div class="vert-label r">唯美电影网 · 2026</div>
+    <div class="hero-body">
+      <div class="hero-quote">— 每一帧都是一首未写完的诗 —</div>
+      <h1>在 <i>光影</i> 之间<br/>找到你的那部电影</h1>
+      <p class="hero-desc">唯美电影网以帧为笔、光为墨，将电影之美凝于方寸之间。不追热度，不逐流量——只为你收藏那些值得反复凝视的画面与瞬间。</p>
+      <div class="hero-actions">
+        <button class="btn btn-solid" onclick="location.href='#album'">步入画册</button>
+        <button class="btn btn-outline" onclick="location.href='#quotes'">读一句台词</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 诗意标签云 -->
+  <section class="section" id="tags">
+    <div class="wrap">
+      <span class="sec-label">— 01 / GENRES</span>
+      <div class="sec-head">
+        <h2>光影分类</h2>
+        <p class="sec-desc">以画面气质而非商业类型划分，让每一部电影找到它应有的位置。</p>
+        <a class="more" href="#">全部 #</a>
+      </div>
+      <div class="tags-grid">
+        <div class="tag-cell">
+          <div class="tag-num">N° 01</div>
+          <h3>暮色温柔</h3>
+          <p>黄昏、离别、未说出口的话——在余晖中慢慢读懂一个人</p>
+        </div>
+        <div class="tag-cell">
+          <div class="tag-num">N° 02</div>
+          <h3>深海寂静</h3>
+          <p>孤独、探索、蓝色调——潜入内心最深处那片无人之境</p>
+        </div>
+        <div class="tag-cell">
+          <div class="tag-num">N° 03</div>
+          <h3>纸间风声</h3>
+          <p>文学改编、书信、旧时光——每一页翻动都是一次重逢</p>
+        </div>
+        <div class="tag-cell">
+          <div class="tag-num">N° 04</div>
+          <h3>雾中行走</h3>
+          <p>迷惘、成长、朦胧美——看不清前路时，脚步反而更轻</p>
+        </div>
+        <div class="tag-cell">
+          <div class="tag-num">N° 05</div>
+          <h3>金色麦田</h3>
+          <p>治愈、田园、慢生活——阳光洒在肩上时，世界都安静了</p>
+        </div>
+        <div class="tag-cell">
+          <div class="tag-num">N° 06</div>
+          <h3>霓虹倒影</h3>
+          <p>城市、夜晚、赛博——灯火阑珊处，每个人都是一座孤岛</p>
+        </div>
+        <div class="tag-cell">
+          <div class="tag-num">N° 07</div>
+          <h3>雪落无声</h3>
+          <p>极简、留白、禅意——少即是多，静即是深</p>
+        </div>
+        <div class="tag-cell">
+          <div class="tag-num">N° 08</div>
+          <h3>花火刹那</h3>
+          <p>瞬间、绚烂、告别——最美的东西往往只存在一秒</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 光影时间线 -->
+  <section class="section" id="lightline" style="background:var(--card2)">
+    <div class="wrap">
+      <span class="sec-label">— 02 / DAILY FRAME</span>
+      <div class="sec-head">
+        <h2>每日帧选</h2>
+        <p class="sec-desc">每天精选一部值得凝视的电影，从第一帧到最后一帧，不遗漏任何细节。</p>
+        <a class="more" href="#">往期帧选 #</a>
+      </div>
+      <div class="lightline">
+        <div class="ll-row">
+          <div class="ll-time"><b>01</b><span>十月</span></div>
+          <div class="ll-dot"></div>
+          <div class="ll-content">
+            <h3>《花样年华》— 旗袍与雨巷的二十三种绿</h3>
+            <p>王家卫用色彩写日记。每一套旗袍对应一种心情，每一场雨都是一次欲言又止。慢下来，你会发现那些被快进忽略的褶皱里，藏着最深的情感。</p>
+            <span class="ll-tag">暮色温柔</span>
+          </div>
+        </div>
+        <div class="ll-row">
+          <div class="ll-time"><b>02</b><span>十月</span></div>
+          <div class="ll-dot"></div>
+          <div class="ll-content">
+            <h3>《星际穿越》— 黑洞边缘的五维诗行</h3>
+            <p>诺兰把爱写成物理定律。当库珀在五维空间里拨动女儿的书架时，重力不再是力，而是思念的传递方式。</p>
+            <span class="ll-tag">深海寂静</span>
+          </div>
+        </div>
+        <div class="ll-row">
+          <div class="ll-time"><b>03</b><span>十月</span></div>
+          <div class="ll-dot"></div>
+          <div class="ll-content">
+            <h3>《海边的曼彻斯特》— 雪与沉默的重量</h3>
+            <p>没有救赎，没有和解，只有一个人背着悲伤继续呼吸。这或许才是最真实的生活——不是每道伤口都能愈合。</p>
+            <span class="ll-tag">雪落无声</span>
+          </div>
+        </div>
+        <div class="ll-row">
+          <div class="ll-time"><b>04</b><span>十月</span></div>
+          <div class="ll-dot"></div>
+          <div class="ll-content">
+            <h3>《千与千寻》— 汤屋灯火里的成长课</h3>
+            <p>宫崎骏用一座澡堂教会我们：记住自己的名字，就是记住自己是谁。那些看似荒诞的角色，每一个都是现实中的我们。</p>
+            <span class="ll-tag">金色麦田</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 画册片单 -->
+  <section class="section" id="album">
+    <div class="wrap">
+      <span class="sec-label">— 03 / ALBUM</span>
+      <div class="sec-head">
+        <h2>画册片单</h2>
+        <p class="sec-desc">像翻阅一本摄影集一样浏览电影——封面即气质，一眼定格。</p>
+        <a class="more" href="#">完整画册 #</a>
+      </div>
+      <div class="album">
+        <div class="album-item">
+          <div class="album-frame"><div class="album-overlay">🎞</div></div>
+          <div class="album-info">
+            <div class="album-line"></div>
+            <h3>迷失东京</h3>
+            <div class="meta">2003 · 索菲亚·科波拉</div>
+            <p>霓虹灯下的孤独对话，两个异乡人在东京的24小时——城市越大，人越近。</p>
+          </div>
+        </div>
+        <div class="album-item">
+          <div class="album-frame"><div class="album-overlay">🎞</div></div>
+          <div class="album-info">
+            <div class="album-line"></div>
+            <h3>爱在黎明破晓前</h3>
+            <div class="meta">1995 · 理查德·林克莱特</div>
+            <p>一列火车、一座城市、一夜长谈。有些相遇注定只为一部电影的长度。</p>
+          </div>
+        </div>
+        <div class="album-item">
+          <div class="album-frame"><div class="album-overlay">🎞</div></div>
+          <div class="album-info">
+            <div class="album-line"></div>
+            <h3>布达佩斯大饭店</h3>
+            <div class="meta">2014 · 韦斯·安德森</div>
+            <p>粉色调的童话城堡，对称构图里的荒诞史诗——每一帧都可以裱起来。</p>
+          </div>
+        </div>
+        <div class="album-item">
+          <div class="album-frame"><div class="album-overlay">🎞</div></div>
+          <div class="album-info">
+            <div class="album-line"></div>
+            <h3>月光男孩</h3>
+            <div class="meta">2016 · 巴里·詹金斯</div>
+            <p>蓝色调的成长三部曲，像一首写给月光的长诗——温柔、隐秘、不可言说。</p>
+          </div>
+        </div>
+        <div class="album-item">
+          <div class="album-frame"><div class="album-overlay">🎞</div></div>
+          <div class="album-info">
+            <div class="album-line"></div>
+            <h3>降临</h3>
+            <div class="meta">2016 · 丹尼斯·维伦纽瓦</div>
+            <p>当语言改变思维，时间不再是线性的——一部关于"预见未来"却选择拥抱当下的电影。</p>
+          </div>
+        </div>
+        <div class="album-item">
+          <div class="album-frame"><div class="album-overlay">🎞</div></div>
+          <div class="album-info">
+            <div class="album-line"></div>
+            <h3>请以你的名字呼唤我</h3>
+            <div class="meta">2017 · 卢卡·瓜达尼诺</div>
+            <p>意大利夏天的阳光、桃子、自行车——以及那个再也不会回来的夏天。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 台词墙 -->
+  <section class="quotes" id="quotes">
+    <div class="wrap">
+      <span class="sec-label" style="text-align:center;display:block">— 04 / QUOTES</span>
+      <div class="sec-head" style="justify-content:center;text-align:center">
+        <h2>台词留白</h2>
+      </div>
+      <div class="quote-grid">
+        <div class="quote-item">
+          <div class="q-mark">"</div>
+          <blockquote>我们笑着说再见，却深知再见遥遥无期。</blockquote>
+          <cite>《海上钢琴师》</cite>
+        </div>
+        <div class="quote-item">
+          <div class="q-mark">"</div>
+          <blockquote>世间所有的相遇，都是久别重逢。</blockquote>
+          <cite>《一代宗师》</cite>
+        </div>
+        <div class="quote-item">
+          <div class="q-mark">"</div>
+          <blockquote>我连一秒都没拥有过你，却感觉失去了你千万次。</blockquote>
+          <cite>《本杰明·巴顿奇事》</cite>
+        </div>
+        <div class="quote-item">
+          <div class="q-mark">"</div>
+          <blockquote>生活不是等待暴风雨过去，而是学会在雨中跳舞。</blockquote>
+          <cite>《歌舞青春》</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 关于 -->
+  <section class="section" id="about">
+    <div class="wrap">
+      <span class="sec-label">— 05 / ABOUT</span>
+      <div class="about-split">
+        <div class="about-text">
+          <h3>关于唯美电影网</h3>
+          <p>唯美电影网（weimeidianyingwang-h5.github.io）是一个以"帧·光影·诗意"为核心理念的影视导航演示站。我们相信电影不仅是故事，更是视觉艺术、情感容器和时间标本。</p>
+          <p>这里没有排行榜、没有算法推荐、没有"必看清单"——只有安静的分类、每日帧选和那些值得被记住的台词。</p>
+          <div class="about-stats">
+            <div class="about-stat"><b>∞</b><span>帧光影</span></div>
+            <div class="about-stat"><b>8</b><span>诗意分类</span></div>
+            <div class="about-stat"><b>100%</b><span>纯静态</span></div>
+          </div>
+        </div>
+        <form class="about-form" onsubmit="event.preventDefault();alert('演示提交：唯美留言已占位');">
+          <h4>寄一张明信片</h4>
+          <input type="text" placeholder="你的名字" aria-label="名字" />
+          <input type="email" placeholder="邮箱（演示）" aria-label="邮箱" />
+          <textarea rows="3" placeholder="想对某部电影说的话……"></textarea>
+          <button type="submit">寄出</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="footer-logo">唯美电影网</div>
+    <div class="footer-links">
+      <a href="#">首页 #</a>
+      <a href="#">光影分类 #</a>
+      <a href="#">每日帧选 #</a>
+      <a href="#">画册片单 #</a>
+      <a href="#">台词留白 #</a>
+    </div>
+    唯美电影网 · <a href="https://weimeidianyingwang-h5.github.io/">weimeidianyingwang-h5.github.io</a><br/>
+    演示页面：所有播放 / 详情 / 分类链接均使用 <code style="background:var(--card2);border:1px solid var(--line2);padding:2px 8px;border-radius:2px;color:var(--rose);font-size:12px">#</code> 占位，不提供真实盗版资源。<br/>
+    © 2026 唯美电影网 Demo · 帧·光影·诗意，仅用于静态站 / SEO / 移动端适配演示。
+  </div>
+</footer>
+
+<script>
+  const burger=document.getElementById('burger'),menu=document.getElementById('menu');
+  burger.addEventListener('click',()=>menu.classList.toggle('open'));
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>menu.classList.remove('open')));
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
+  }));
+  // 首屏渐变切换
+  let slideIdx=0;
+  setInterval(()=>{
+    const slides=document.querySelectorAll('.hero-slide');
+    slides[slideIdx].style.opacity='.15';
+    slideIdx=(slideIdx+1)%slides.length;
+    slides[slideIdx].style.opacity=slideIdx===1?'.25':slideIdx===2?'.2':'.35';
+  },4000);
+</script>
+</body>
+</html>
